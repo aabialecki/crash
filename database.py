@@ -1,6 +1,6 @@
 import pymongo
 
-client = pymongo.MongoClient("mongodb+srv://admin:fc1d2ec4@crash-cluster.m8hdb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+client = pymongo.MongoClient("insert mongodb link here")
 
 db = client["crash-database"]
 
