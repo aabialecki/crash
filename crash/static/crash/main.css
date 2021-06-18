@@ -1,0 +1,24 @@
+body {
+  background: #fafafa;
+  color: #333333;
+}
+
+ul {
+  margin: 0;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.vertical-space {
+  margin-bottom: 5px;
+}
+
+canvas {
+  background-color: #3c3c3c;
+}

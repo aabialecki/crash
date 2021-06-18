@@ -1,0 +1,85 @@
+{% extends "crash/base.html" %}
+{% load crispy_forms_tags %}
+{% block navbar %}
+
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand mr-4" href="{% url 'game' %}"><b class="ml-5">Crash Simulator!</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Welcome, {{user.username}}!</a>
+                </li>
+            </ul>
+            <u1 class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="false">Balance: ${{user.stats.balance}}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </u1>
+        </div>
+    </div>
+</nav>
+{% endblock navbar%}
+
+
+{% block content%}
+<p class="vertical-space"> </p>
+<div class="row">
+    <div class="col-md" ">
+        {% load static %}
+        <canvas id="chart" width="640" height="640" style="border:1px solid #000000"></canvas>
+        <script type="text/javascript" src="{% static 'crash/gamecanvas.js' %}"></script>
+
+
+    </div>
+    <div class="col-sm">
+        {% if game_msg.isWinner != None %}
+        
+        <div class="card  " id="infocard" style="visibility:hidden">
+            <script id="gscript" type="text/javascript" game_info="{{game_msg}}">
+                startGame();
+            </script>
+            {% if game_msg.isWinner == "True" %}
+            <div class="card-header">You Won :)</div>
+            {% else %}
+            <div class="card-header">You Lost :(</div>
+            {% endif %}
+
+            <div class="card-body">
+                {% if game_msg.isWinner == "True" %}
+                <h5 class="card-title" style="color:green">+${{game_msg.winnings}}</h5>
+                {% else %}
+                <h5 class="card-title" style="color:red">-${{game_msg.winnings}}</h5>
+                {% endif %}
+
+                <p class="card-text">
+                    The game crashed at {{game_msg.crash_multiplier}}x and your cashout multiplier was set at {{game_msg.multiplier}}x meaning your new balance is ${{user.stats.balance}}
+                </p>
+
+
+            </div>
+            <div class="card-footer">Bet: ${{game_msg.bet}}</div>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+
+
+<form method="post" id="gameform">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="input-group-append">
+        <button class="btn btn-success" type="submit" id="form-submit">Submit Bet</button>
+    </div>
+</form>
+
+{% endblock content %}
