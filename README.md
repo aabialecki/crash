@@ -1,6 +1,5 @@
 # crash
 A small crash gambling game written in python and javascript.
-------
 
 ## Features
 * Login / Account System
